@@ -42,6 +42,8 @@ from deltacat.compute.merge_on_read.model.merge_on_read_params import MergeOnRea
 from deltacat.storage.model.types import DeltaType
 from deltacat.types.media import ContentType, TableType, DistributedDatasetType
 from deltacat.types.tables import TableWriteMode
+from deltacat.utils.config_loader import (load_catalog_config_from_yaml)
+
 from deltacat.compute.merge_on_read import MERGE_FUNC_BY_DISTRIBUTED_DATASET_TYPE
 from deltacat import logs
 from deltacat.constants import DEFAULT_NAMESPACE
@@ -65,6 +67,7 @@ native `Catalog` implementation (e.g., the root URI for the catalog metastore).
 # catalog functions
 def initialize(
     config: Optional[CatalogProperties] = None,
+    config_path: Optional[str] = None,
     *args,
     **kwargs,
 ) -> CatalogProperties:
@@ -74,6 +77,9 @@ def initialize(
     instance is given, a new `CatalogProperties` instance is constructed
     using the given keyword arguments.
 
+        Initialize catalog from a CatalogProperties object or a YAML config file.
+
+
     Returns the input config if given, and the newly created config otherwise.
     """
     if config is not None:
@@ -82,6 +88,8 @@ def initialize(
                 f"Expected `CatalogProperties` but found `{type(config)}`."
             )
         return config
+    elif config_path is not None:
+        return load_catalog_config_from_yaml(config_path)
     else:
         return CatalogProperties(*args, **kwargs)
 
