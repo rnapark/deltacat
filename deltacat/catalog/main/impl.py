@@ -42,7 +42,7 @@ from deltacat.compute.merge_on_read.model.merge_on_read_params import MergeOnRea
 from deltacat.storage.model.types import DeltaType
 from deltacat.types.media import ContentType, TableType, DistributedDatasetType
 from deltacat.types.tables import TableWriteMode
-from deltacat.utils.config_loader import (load_catalog_config_from_yaml)
+from deltacat.utils.config_loader import load_catalog_config_from_yaml
 
 from deltacat.compute.merge_on_read import MERGE_FUNC_BY_DISTRIBUTED_DATASET_TYPE
 from deltacat import logs
